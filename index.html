@@ -1,236 +1,184 @@
-<!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Abhiram Nair</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhiram Nair</title>
+    <style>
+        body {
+            font-family: monospace;
+            background-color: #ffdab9;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 2.5em;
+        }
+        p {
+            margin: 10px 0;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links a, #space-mode {
+            color: inherit;
+            text-decoration: none;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+        #space-mode {
+            text-decoration: underline;
+        }
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+        .shooting-star {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 1) 100%);
+            opacity: 0;
+        }
+        .moon {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            box-shadow: inset -10px 0 #d0d0d0;
+            display: none;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Abhiram Nair</h1>
+        <p>Hi! My world revolves around tech, writing and table tennis.</p>
+        <p>Currently playing around with Attention mechanisms and neural networks to find .</p>
+        <p>Hit me up if you want to chat about startups, movies, games, music etc.!</p>
+        <div class="links">
+            <a href="https://www.linkedin.com/in/abhiz123" target="_blank">LinkedIn</a>
+            <a href="https://truemid.substack.com" target="_blank">Substack</a>
+            <span id="space-mode">dark-mode.exe</span>
+            <a href="https://twitter.com/0_yes_abhi" target="_blank">X</a>
+        </div>
+    </div>
+    <div class="moon"></div>
+    <audio id="space-audio" loop>
+        <source src="tough-cut.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const body = document.body;
+            const spaceMode = document.getElementById('space-mode');
+            const audio = document.getElementById('space-audio');
+            const moon = document.querySelector('.moon');
+            let isSpaceMode = false;
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+            function createStars() {
+                for (let i = 0; i < 200; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    positionStar(star);
+                    body.appendChild(star);
+                }
+            }
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1>Abhiram Nair<br />
-						</h1>
-						<!-- <p>A free, fully responsive HTML5 + CSS3 site template designed by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a><br />
-						and released for free under the <a href="https://html5up.net/license">Creative Commons license</a>.</p> -->
-						<p>Computer Science Student studing at University of Massachusetts Amherst, Seeking Summer Internship for Full Stack development and Data Science roles.
-							 Connect with me on Linkedin <a href="https://linkedin.com/in/abhiz123">@Abhiram Nair</a>
-							  or email me at <a href = "mailto: amnair@umass.edu">amnair@umass.edu</a></p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
-					</div>
+            function positionStar(star) {
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                star.style.width = `${1 + Math.random() * 2}px`;
+                star.style.height = star.style.width;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+            }
 
-				<!-- Header -->
-					<header id="header">
-						<a href="resume/resume 3.pdf" class="logo">Resume</a>
-					</header>
+            function createShootingStars() {
+                setInterval(() => {
+                    if (Math.random() < 0.6) {
+                        const shootingStar = document.createElement('div');
+                        shootingStar.className = 'shooting-star';
+                        positionShootingStar(shootingStar);
+                        body.appendChild(shootingStar);
+                        animateShootingStar(shootingStar);
+                    }
+                }, 500);
+            }
 
-				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li class="active"><a href="index.html">About Me</a></li>
-							<!-- <li><a href="generic.html">Generic Page</a></li>
-							<li><a href="elements.html">Elements Reference</a></li> -->
-						</ul>
-						<ul class="icons">
-							<li><a href="https://www.linkedin.com/in/abhiz123/" class="icon brands fa-linkedin"><span class="label">Twitter</span></a></li>
-							<li><a href="https://github.com/abhiz123" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="https://www.facebook.com/abhiz123/" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-							<li><a href="https://www.instagram.com/0_yes_abhi/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-						</ul>
-					</nav>
+            function positionShootingStar(star) {
+                const startX = Math.random() * window.innerWidth;
+                const startY = Math.random() * window.innerHeight;
+                star.style.left = `${startX}px`;
+                star.style.top = `${startY}px`;
+                star.style.width = `${50 + Math.random() * 80}px`;
+            }
 
-				<!-- Main -->
-					<div id="main">
+            function animateShootingStar(star) {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 200 + Math.random() * 200;
+                const duration = 800 + Math.random() * 700;
+                const endX = Math.cos(angle) * distance;
+                const endY = Math.sin(angle) * distance;
 
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<span class="date">April 25, 2017</span>
-									<h2><a href="#">A bit about me<br />
-									</a></h2>
-									<p>Hi, I am Abhiram. Nice to meet you!
-										I am a Junior Undergraduate Computer Science student at the University Of Massachusetts Amherst.
+                star.animate([
+                    { transform: 'translate(0, 0) rotate(0deg)', opacity: 0 },
+                    { transform: `translate(${endX}px, ${endY}px) rotate(${angle}rad)`, opacity: 1, offset: 0.1 },
+                    { transform: `translate(${endX * 2}px, ${endY * 2}px) rotate(${angle}rad)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'ease-out'
+                }).onfinish = () => star.remove();
+            }
 
-										I have some experience in Backend and Frontend Engineering from working at UMass CICS where I was exposed to different technology stacks and practices. I am skilled in understanding business needs, specifying requirements, and implementing software with the highest standards in mind.
+            function animateMoon() {
+                const angle = Date.now() * 0.001;
+                const x = Math.cos(angle) * 40 + 50;
+                const y = Math.sin(angle) * 40 + 50;
+                moon.style.left = `calc(${x}% - 25px)`;
+                moon.style.top = `calc(${y}% - 25px)`;
+                requestAnimationFrame(animateMoon);
+            }
 
-										I have used Python and Javascript extensively however lately I have developed a new love for Java. I am very passionate and deeply curious about Computer Science and Software Engineering.Currently, my interests are software engineering, big data, and artificial intelligence (specifically deep learning).
+            function toggleSpaceMode() {
+                isSpaceMode = !isSpaceMode;
+                if (isSpaceMode) {
+                    body.style.backgroundColor = '#000';
+                    body.style.color = '#ffdab9';
+                    createStars();
+                    createShootingStars();
+                    moon.style.display = 'block';
+                    animateMoon();
+                    audio.play();
+                } else {
+                    body.style.backgroundColor = '#ffdab9';
+                    body.style.color = '#000';
+                    const stars = document.querySelectorAll('.star, .shooting-star');
+                    stars.forEach(star => star.remove());
+                    moon.style.display = 'none';
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+            }
 
-										I am always on the lookout for challenging opportunities and currently open to hiring.</p>
-								</header>
-								<a href="#" class="image main"><img src="images/final.png" alt="" /></a>
-								<ul class="actions special">
-									<li><a href="#" class="button large">Projects</a></li>
-								</ul>
-							</article>
-
-						<!-- Posts -->
-							<section class="posts">
-								<article>
-									<header>
-										<span class="date">April 24, 2017</span>
-										<h2><a href="#">Fleabag VS Mutt<br />
-										</a></h2>
-									</header>
-									<a href="https://github.com/abhiz123/fleabagvmutt" class="image fit"><img src="images/catvdog.jpeg" alt="" /></a>
-									<p>An image classifier made with CNN models like VGG16 to classify between mainly cats and dogs.
-										 It further developed into classifying any image with accuracy using MobileNet Model.</p>
-									<ul class="actions special">
-										<!-- <li><a href="https://github.com/abhiz123" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li> -->
-
-										<li><a href="https://github.com/abhiz123/fleabagvmutt" class="icon brands alt fa-github"> View Github Repo</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 22, 2017</span>
-										<h2><a href="#">COVID TRACKER<br />
-										</a></h2>
-									</header>
-									<a href="https://abhiz123.github.io/covid-tracker/" class="image fit"><img src="images/covidtracker.png" alt="" /></a>
-									<p>A web application which provides various info and statistics about the current cases of covid around the world. Used Reactjs to implement this webapp.</p>
-									<ul class="actions special">
-										<li><a href="https://abhiz123.github.io/covid-tracker/" class="fa fa-globe">View Website</a></li>
-										<li><a href="https://github.com/abhiz123/covid-tracker" class="icon brands alt fa-github"> View Github Repo</a></li>
-
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 18, 2017</span>
-										<h2><a href="#">Toxic VS Wholesome<br />
-										Classifier</a></h2>
-									</header>
-									<a href="https://github.com/abhiz123/toxic-or-wholesome-classifier" class="image fit"><img src="images/toxic.jpeg" alt="" /></a>
-									<p>This project aims to find the toxicity levels of people using data from social media websites like twitter, reddit etc.
-										 Users can search for recent content a person has uploaded on social media websites and figure out how toxic it is.
-										 Implemented in python/Jupyter Notebooks by using sklearn for model generation from the "toxicity" kaggle dataset.</p>
-									<ul class="actions special">
-										<li><a href="https://github.com/abhiz123/toxic-or-wholesome-classifier" class="icon brands alt fa-github"> View Github Repo</a></li>
-
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 14, 2017</span>
-										<h2><a href="#">XDROP<br />
-										FILE TRANSFER</a></h2>
-									</header>
-									<a href="https://play.google.com/store/apps/details?id=com.xdrop.release&hl=en&gl=US" class="image fit"><img src="images/xdrop.png" alt="" /></a>
-									<p> This is a fast file sharing application which is made by me and other two friends which currently runs on Android and IOS.
-										This uses the latest UDP technology for fast sharing of files upto speed of 9MB per second.
-										Have used Flutter + Dart to implement this application and used Goggle's nearby connections API for sharing technology.</p>
-									<ul class="actions special">
-										<li><a href="https://play.google.com/store/apps/details?id=com.xdrop.release&hl=en&gl=US" class="fab fa-google-play"> View Google Play Link</a></li>
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 11, 2017</span>
-										<h2><a href="#">The naruto store<br />
-										</a></h2>
-									</header>
-									<a href="https://thenarutostore.com/" class="image fit"><img src="images/thenarutostore.png" alt="" /></a>
-									<p>This is a website I have developed because of my passion for Anime. I have used Shopify's own programming language "liquid" to implement the designs and use it for hosting.
-										 Used some of Shopify's features like Oberlo to easily connect with International Sellers to find different products.</p>
-									<ul class="actions special">
-										<li><a href="https://thenarutostore.com/" class="fa fa-globe">View Website</a></li>
-
-									</ul>
-								</article>
-								<article>
-									<header>
-										<span class="date">April 7, 2017</span>
-										<h2><a href="#">chatapp<br />
-										</a></h2>
-									</header>
-									<a href="https://github.com/abhiz123/chatapp" class="image fit"><img src="images/chatapp.png" alt="" /></a>
-									<p>A basic chat application which enables you to chat in real time with anyone else. Made using react and Firebase.</p>
-									<ul class="actions special">
-										<li><a href="https://abhiz123.github.io/chatapp/signup" class="fa fa-globe">View Website</a></li>
-										<li><a href="https://github.com/abhiz123/chatapp" class="icon brands alt fa-github"> View Github Repo</a></li>
-									</ul>
-								</article>
-							</section>
-
-
-
-					</div>
-
-				<!-- Footer -->
-					<footer id="footer">
-						<section>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="3"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
-						</section>
-						<section class="split contact">
-							<section>
-								<h3>Address</h3>
-								<p>231 Pelham Road Amherst MA USA</p>
-							</section>
-							<section>
-								<h3>Phone</h3>
-								<p><a href="tel:4134094014">413-409-4014</a></p>
-							</section>
-							<section>
-								<h3>Email</h3>
-								<p><a href = "mailto: amnair@umass.edu">amnair@umass.edu</a></p>
-							</section>
-							<section>
-								<h3>Social</h3>
-								<ul class="icons alt">
-									<li><a href="https://www.linkedin.com/in/abhiz123/" class="icon brands alt fa-linkedin"><span class="label">Twitter</span></a></li>
-									<li><a href="https://www.facebook.com/abhiz123/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-									<li><a href="https://www.instagram.com/0_yes_abhi/" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="https://github.com/abhiz123" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-								</ul>
-							</section>
-						</section>
-					</footer>
-
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; ABHIRAM Nair</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
-
-			</div>
-
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-
-	</body>
+            spaceMode.addEventListener('click', toggleSpaceMode);
+        });
+    </script>
+</body>
 </html>
