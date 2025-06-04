@@ -1,0 +1,16 @@
+# Ignore macOS desktop services store files
+.DS_Store
+# Windows thumbnails
+Thumbs.db
+# Vim swap files
+*.swp
+*.swo
+# Temporary files ending with tilde
+*~
+# Node modules
+node_modules/
+# Python cache directories
+__pycache__/
+# IDE folders
+.vscode/
+.idea/
