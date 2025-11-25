@@ -140,6 +140,7 @@ export default function Home() {
 
   return (
     <main>
+      <div className="animated-bg" />
       <div className="container">
         <h1>Abhiram Nair</h1>
         <p>Hi! Tech, dance, writing, and table tennis are the core of my world.</p>

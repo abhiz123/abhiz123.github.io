@@ -22,7 +22,8 @@
 
 body {
   /* Font family is handled by Next.js font optimization in layout.tsx */
-  background-color: var(--bg-color);
+  background: linear-gradient(135deg, #ffe8f3, #d9f3ff);
+  /* Soft pastel gradient base */
   color: var(--text-color);
   display: flex;
   justify-content: center;
@@ -144,6 +145,76 @@ body.space-active button#space-mode:hover {
 }
 
 /* Animations */
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotate-reverse {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -2;
+  /* Behind everything */
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.2),
+      rgba(0, 0, 0, 0.1));
+  transition: opacity 0.8s ease;
+}
+
+.animated-bg::before,
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg,
+      #ff9aa2,
+      #ffb7b2,
+      #ffdac1,
+      #e2f0cb,
+      #a2e4ff,
+      #c9afff,
+      #ffb7b2,
+      #ff9aa2);
+  transform: translate(-50%, -50%);
+  animation: rotate 8s linear infinite;
+  filter: blur(50px);
+  opacity: 0.8;
+}
+
+.animated-bg::after {
+  width: 180%;
+  height: 180%;
+  animation: rotate-reverse 10s linear infinite;
+  opacity: 0.6;
+}
+
+/* Hide animated background in Space Mode */
+body.space-active .animated-bg {
+  opacity: 0;
+}
+
 .star {
   position: absolute;
   background-color: #fff;
