@@ -1,17 +1,16 @@
-
-
 import AnimatedBackground from "@/components/AnimatedBackground";
 import Hero from "@/components/Hero";
 import UnifiedFeed from "@/components/UnifiedFeed";
 import Dock from "@/components/Dock";
 import { getGithubActivity } from "@/lib/github";
-import { getSubstackPosts } from "@/lib/rss";
+import { getSubstackPosts, getMediumPosts } from "@/lib/rss";
+
+export const revalidate = 3600; // Revalidate every hour
 
 export default async function Home() {
-  const [githubActivity, substackPosts] = await Promise.all([
-    getGithubActivity("abhiz123"),
-    getSubstackPosts("https://truemid.substack.com/feed"),
-  ]);
+  const githubActivity = await getGithubActivity("abhiz123");
+  const substackPosts = await getSubstackPosts("https://truemid.substack.com/feed");
+  const mediumPosts = await getMediumPosts("truemid");
 
   return (
     <main className="min-h-screen relative overflow-x-hidden selection:bg-blue-500/30">
@@ -23,7 +22,11 @@ export default async function Home() {
             <Hero />
           </div>
           <div className="xl:col-span-3 sticky top-12">
-            <UnifiedFeed githubActivity={githubActivity} substackPosts={substackPosts} />
+            <UnifiedFeed
+              githubActivity={githubActivity}
+              substackPosts={substackPosts}
+              mediumPosts={mediumPosts}
+            />
           </div>
         </div>
       </div>

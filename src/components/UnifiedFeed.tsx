@@ -30,16 +30,16 @@ const Notification = ({ item }: { item: Item }) => {
                 className={cn(
                     "relative flex flex-col w-full cursor-pointer overflow-hidden rounded-xl h-48 mb-3 shrink-0",
                     "transition-all duration-200 ease-in-out hover:scale-[102%]",
-                    "shadow-lg hover:shadow-xl border border-white/10",
+                    "shadow-sm hover:shadow-md border border-white/20",
                     "group"
                 )}
             >
                 <img
                     src={item.image}
                     alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
                 <div
                     className="absolute top-3 right-3 flex items-center justify-center w-7 h-7 rounded-full backdrop-blur-md border border-white/20 shadow-sm"
@@ -48,18 +48,15 @@ const Notification = ({ item }: { item: Item }) => {
                     <span className="text-white scale-90">{item.icon}</span>
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-3 flex flex-col gap-1 bg-black/30 backdrop-blur-md border-t border-white/10">
+                <div className="absolute bottom-0 left-0 right-0 p-3 flex flex-col gap-1 backdrop-blur-[2px]">
                     <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[10px] font-medium text-white/80 uppercase tracking-wider">{item.meta}</span>
-                        <span className="text-[10px] text-white/60">•</span>
-                        <span className="text-[10px] text-white/60">{item.date}</span>
+                        <span className="text-[10px] font-medium text-white/90 uppercase tracking-wider">{item.meta}</span>
+                        <span className="text-[10px] text-white/70">•</span>
+                        <span className="text-[10px] text-white/70">{item.date}</span>
                     </div>
-                    <h3 className="text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-blue-200 transition-colors">
+                    <h3 className="text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-white/90 transition-colors">
                         {item.title}
                     </h3>
-                    <p className="text-[10px] text-gray-200 line-clamp-2 font-medium">
-                        {item.description}
-                    </p>
                 </div>
             </a>
         );
@@ -73,7 +70,7 @@ const Notification = ({ item }: { item: Item }) => {
             className={cn(
                 "relative flex flex-col w-full cursor-pointer overflow-hidden rounded-xl p-3 mb-3",
                 "transition-all duration-200 ease-in-out hover:scale-[102%]",
-                "bg-gray-900/40 backdrop-blur-md border border-white/10 shadow-lg hover:bg-gray-900/60 hover:shadow-xl hover:border-white/20",
+                "bg-white/30 backdrop-blur-xl border border-white/30 shadow-sm hover:bg-white/40 hover:shadow-md hover:border-white/40",
                 "group"
             )}
         >
@@ -88,13 +85,13 @@ const Notification = ({ item }: { item: Item }) => {
                 </div>
                 <div className="flex flex-col flex-1 min-w-0">
                     <div className="flex flex-row items-center justify-between mb-1">
-                        <span className="text-[10px] font-medium text-white/40 uppercase tracking-wider">{item.meta}</span>
-                        <ExternalLink className="h-3 w-3 text-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-[10px] font-medium text-gray-600 uppercase tracking-wider">{item.meta}</span>
+                        <ExternalLink className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
-                    <h3 className="text-sm font-bold text-white/90 leading-tight mb-1 line-clamp-2 group-hover:text-blue-300 transition-colors">
+                    <h3 className="text-sm font-bold text-gray-900 leading-tight mb-1 line-clamp-2 group-hover:text-gray-700 transition-colors">
                         {item.title}
                     </h3>
-                    <p className="text-xs text-white/50 line-clamp-2 font-medium">
+                    <p className="text-xs text-gray-600 line-clamp-2 font-medium">
                         {item.description}
                     </p>
                 </div>
@@ -103,7 +100,19 @@ const Notification = ({ item }: { item: Item }) => {
     );
 };
 
-export default function UnifiedFeed({ githubActivity = [], substackPosts = [] }: { githubActivity?: any[], substackPosts?: any[] }) {
+const SubstackLogo = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z" />
+    </svg>
+);
+
+const MediumLogo = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+        <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z" />
+    </svg>
+);
+
+export default function UnifiedFeed({ githubActivity = [], substackPosts = [], mediumPosts = [] }: { githubActivity?: any[], substackPosts?: any[], mediumPosts?: any[] }) {
     const [filter, setFilter] = useState<"all" | "writing" | "code">("writing");
 
     const items: Item[] = useMemo(() => {
@@ -128,20 +137,34 @@ export default function UnifiedFeed({ githubActivity = [], substackPosts = [] }:
             date: post.date,
             rawDate: post.rawDate,
             url: post.url,
-            icon: <Rss className="h-4 w-4" />,
+            icon: <SubstackLogo className="h-3.5 w-3.5" />,
             color: "#FF6719",
             meta: "Substack",
             image: post.image,
         }));
 
-        return [...ghItems, ...subItems]
+        const medItems = mediumPosts.map((post) => ({
+            id: `med-${post.id}`,
+            type: "substack" as const, // Treat as writing/substack type for filtering and styling
+            title: post.title,
+            description: post.excerpt,
+            date: post.date,
+            rawDate: post.rawDate,
+            url: post.url,
+            icon: <MediumLogo className="h-3.5 w-3.5" />,
+            color: "#000000", // Medium brand color (black)
+            meta: post.source === "Medium" ? "Medium" : `${post.source}`, // Show publication if available
+            image: post.image,
+        }));
+
+        return [...ghItems, ...subItems, ...medItems]
             .sort((a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime())
-            .slice(0, 20);
-    }, [githubActivity, substackPosts]);
+            .slice(0, 30); // Increased limit to show more posts
+    }, [githubActivity, substackPosts, mediumPosts]);
 
     const filteredItems = useMemo(() => {
         if (filter === "all") return items;
-        if (filter === "writing") return items.filter(i => i.type === "substack");
+        if (filter === "writing") return items.filter(i => i.type === "substack"); // Includes Medium as they share the type
         if (filter === "code") return items.filter(i => i.type === "github");
         return items;
     }, [items, filter]);
