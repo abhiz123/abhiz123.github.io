@@ -1,12 +1,62 @@
 @import "tailwindcss";
 
 :root {
-  --background: #050505;
-  --foreground: #ededed;
+  --burnt-orange: #E85D04;
+  --mustard-yellow: #F4D03F;
+  --avocado-green: #6B8E23;
+  --hot-pink: #FF1493;
+  --teal: #008080;
+  --cream: #fefae0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #3d405b;
+  background: var(--cream);
+  font-family: var(--font-righteous), 'Righteous', cursive;
+  min-height: 100vh;
+}
+
+.font-groovy {
+  font-family: var(--font-shrikhand), 'Shrikhand', cursive;
+}
+
+.font-retro {
+  font-family: var(--font-abril), 'Abril Fatface', serif;
+}
+
+.font-funky {
+  font-family: var(--font-righteous), 'Righteous', cursive;
+}
+
+::selection {
+  background: var(--hot-pink);
+  color: white;
+}
+
+/* Hide scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

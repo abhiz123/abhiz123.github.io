@@ -11,6 +11,17 @@ const config: Config = {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
+                "burnt-orange": "#E85D04",
+                "mustard-yellow": "#F4D03F",
+                "avocado-green": "#6B8E23",
+                "hot-pink": "#FF1493",
+                "teal": "#008080",
+                "cream": "#fefae0",
+            },
+            fontFamily: {
+                groovy: ["Shrikhand", "cursive"],
+                retro: ["Abril Fatface", "cursive"],
+                funky: ["Righteous", "cursive"],
             },
             keyframes: {
                 twinkle: {
@@ -31,8 +42,12 @@ const config: Config = {
                 rotate: "rotate 8s linear infinite",
                 "rotate-reverse": "rotate-reverse 10s linear infinite",
             },
+            borderRadius: {
+                pill: "50px",
+            },
         },
     },
     plugins: [],
 };
+
 export default config;

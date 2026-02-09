@@ -1,8 +1,27 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Shrikhand, Righteous, Abril_Fatface } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const shrikhand = Shrikhand({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-shrikhand",
+  display: "swap",
+});
+
+const righteous = Righteous({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-righteous",
+  display: "swap",
+});
+
+const abrilFatface = Abril_Fatface({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-abril",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Abhiram Nair",
@@ -24,7 +43,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${shrikhand.variable} ${righteous.variable} ${abrilFatface.variable} font-funky`}>
+        {children}
+      </body>
     </html>
   );
 }
