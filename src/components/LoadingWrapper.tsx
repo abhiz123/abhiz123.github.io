@@ -1,8 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./LoadingScreen";
+
+const LoadingContext = createContext(true);
+
+export function useLoadingState() {
+  return useContext(LoadingContext);
+}
 
 export default function LoadingWrapper({
   children,
@@ -12,13 +18,13 @@ export default function LoadingWrapper({
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <>
+    <LoadingContext.Provider value={isLoading}>
+      {children}
       <AnimatePresence>
         {isLoading && (
           <LoadingScreen onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
-      {children}
-    </>
+    </LoadingContext.Provider>
   );
 }

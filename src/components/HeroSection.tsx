@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import VideoBackground from "./VideoBackground";
+import { useLoadingState } from "./LoadingWrapper";
 
 const HLS_SRC =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
@@ -12,6 +13,7 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLHeadingElement>(null);
   const [roleIndex, setRoleIndex] = useState(0);
+  const isLoading = useLoadingState();
 
   // Cycle roles
   useEffect(() => {
@@ -62,7 +64,11 @@ export default function HeroSection() {
       />
 
       {/* Hero content */}
-      <div className="relative z-10 text-center px-6 w-full max-w-[1400px] mx-auto">
+      <div
+        className={`relative z-10 text-center px-6 w-full max-w-[1400px] mx-auto transition-opacity duration-300 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      >
         {/* Eyebrow */}
         <p className="blur-in text-xs text-muted uppercase tracking-[0.35em] mb-8">
           Collection &apos;26
@@ -115,7 +121,11 @@ export default function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
+      <div
+        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10 transition-opacity duration-300 ${
+          isLoading ? "opacity-0" : "opacity-100"
+        }`}
+      >
         <span className="text-xs text-muted uppercase tracking-[0.2em]">
           Scroll
         </span>

@@ -78,11 +78,11 @@ export default function ContactFooter() {
             Get in touch
           </p>
           <a
-            href="mailto:contact@abhiramnair.com"
+            href="mailto:cuttyflamgg@gmail.com"
             className="group relative inline-flex items-center gap-2 rounded-full text-lg md:text-xl px-8 py-4 text-text-primary border border-stroke hover:border-transparent transition-all"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
-            hello@abhiramnair.com
+            Contact now
             <span className="text-sm">↗</span>
           </a>
         </div>
