@@ -79,6 +79,23 @@ body {
   }
 }
 
+@keyframes steam-rise {
+  0% {
+    transform: translate3d(0, 12px, 0) scale(0.9);
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.28;
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate3d(14px, -52px, 0) scale(1.18);
+    opacity: 0;
+  }
+}
+
 .animate-scroll-down {
   animation: scroll-down 1.5s ease-in-out infinite;
 }
@@ -94,6 +111,35 @@ body {
 
 .animate-marquee {
   animation: marquee 40s linear infinite;
+}
+
+.steam-line {
+  position: absolute;
+  bottom: 0;
+  width: 28px;
+  height: 96px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.22), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(170, 255, 211, 0.04));
+  filter: blur(10px);
+  opacity: 0;
+  mix-blend-mode: screen;
+  animation: steam-rise 4.8s ease-in-out infinite;
+}
+
+.steam-line-1 {
+  left: 6px;
+}
+
+.steam-line-2 {
+  left: 28px;
+  animation-delay: 1.1s;
+}
+
+.steam-line-3 {
+  left: 48px;
+  animation-delay: 2s;
 }
 
 /* Halftone overlay for project cards */

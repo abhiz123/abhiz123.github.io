@@ -3,52 +3,113 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const PROJECTS = [
+type MatchaProject = {
+  title: string;
+  category: string;
+  video: string;
+  href: string;
+  colSpan: string;
+  aspect: string;
+  type: "matcha";
+};
+
+type ImageProject = {
+  title: string;
+  category: string;
+  image: string;
+  href: string;
+  colSpan: string;
+  aspect: string;
+  align: string;
+  glow: string;
+  type: "image";
+};
+
+const PROJECTS: Array<MatchaProject | ImageProject> = [
+ 
   {
-    title: "Midnight Roast",
-    category: "Design / Development",
-    image:
-      "https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1200&q=80",
+    title: "Matcha Resume",
+    category: "Product Design / AI UX",
+    video: "/videos/matcha-resume-steam.mp4",
+    href: "https://www.matcharesume.com/",
     colSpan: "md:col-span-7",
     aspect: "aspect-[5/4]",
-    align: "justify-center",
-    glow:
-      "from-[#101826]/95 via-[#161d2b]/85 to-[#7a5a2e]/45",
+    type: "matcha",
   },
   {
     title: "Signal Atlas",
     category: "Frontend System",
     image:
       "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80",
+    href: "#contact",
     colSpan: "md:col-span-5",
     aspect: "aspect-[4/5]",
     align: "items-end",
     glow:
       "from-[#0d1220]/80 via-[#1a2952]/35 to-transparent",
+    type: "image",
   },
   {
     title: "Quiet Horizons",
     category: "Visual Study",
     image:
       "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=1200&q=80",
+    href: "#contact",
     colSpan: "md:col-span-5",
     aspect: "aspect-[4/5]",
     align: "items-end",
     glow:
       "from-[#d8d2bc]/25 via-transparent to-[#0a0a0a]/80",
+    type: "image",
   },
   {
     title: "Blue Current",
     category: "Motion Direction",
     image:
       "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
+    href: "#contact",
     colSpan: "md:col-span-7",
     aspect: "aspect-[5/4]",
     align: "justify-end",
     glow:
       "from-[#0f2f66]/20 via-[#0b1834]/20 to-[#06070a]/85",
+    type: "image",
   },
 ];
+
+function MatchaProjectVisual({ video }: { video: string }) {
+  return (
+    <div className="absolute inset-0 overflow-hidden rounded-[2rem] bg-[#090909]">
+      <video
+        src={video}
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]"
+      />
+
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.04),rgba(0,0,0,0.12)_38%,rgba(0,0,0,0.78)_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_32%_72%,rgba(133,255,186,0.14),transparent_18%),radial-gradient(circle_at_70%_22%,rgba(122,255,178,0.08),transparent_24%)]" />
+
+      <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-[#b9ffd3]/18 bg-black/35 px-3 py-2 text-[0.68rem] uppercase tracking-[0.22em] text-[#d7ffe7]/72 backdrop-blur-sm">
+        <span className="h-1.5 w-1.5 rotate-45 bg-[#99ffc7]" />
+        AI System
+      </span>
+
+      <span className="pointer-events-none absolute left-[-9px] top-14 h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+      <span className="pointer-events-none absolute right-8 top-[-9px] h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+
+      <div className="pointer-events-none absolute left-1/2 top-[63%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-black/28 px-6 py-3 backdrop-blur-md shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
+        <span className="text-sm md:text-base uppercase tracking-[0.32em] text-white/82">
+          Matcha Resume
+        </span>
+      </div>
+
+    </div>
+  );
+}
 
 export default function SelectedWorks() {
   return (
@@ -101,7 +162,9 @@ export default function SelectedWorks() {
           {PROJECTS.map((project, i) => (
             <motion.a
               key={project.title}
-              href="#contact"
+              href={project.href}
+              target={project.href.startsWith("http") ? "_blank" : undefined}
+              rel={project.href.startsWith("http") ? "noopener noreferrer" : undefined}
               className={`project-card-notch group relative ${project.colSpan} col-span-1 ${project.aspect} overflow-hidden rounded-[2rem] border border-white/8 bg-black/30`}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -112,35 +175,43 @@ export default function SelectedWorks() {
               }}
               viewport={{ once: true, margin: "-60px" }}
             >
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              {project.type === "matcha" ? (
+                <MatchaProjectVisual video={project.video} />
+              ) : (
+                <>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
 
-              <div className="halftone-overlay absolute inset-0 mix-blend-soft-light opacity-70" />
-              <div className={`absolute inset-0 bg-gradient-to-t ${project.glow}`} />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.72))]" />
+                  <div className="halftone-overlay absolute inset-0 mix-blend-soft-light opacity-70" />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${project.glow}`} />
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.72))]" />
 
-              <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-3 py-2 text-[0.68rem] uppercase tracking-[0.22em] text-white/70 backdrop-blur-sm">
-                <span className="h-1.5 w-1.5 rotate-45 bg-white/70" />
-                {project.category}
-              </span>
+                  <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-white/12 bg-black/35 px-3 py-2 text-[0.68rem] uppercase tracking-[0.22em] text-white/70 backdrop-blur-sm">
+                    <span className="h-1.5 w-1.5 rotate-45 bg-white/70" />
+                    {project.category}
+                  </span>
 
-              <span className="pointer-events-none absolute left-[-9px] top-14 h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
-              <span className="pointer-events-none absolute right-8 top-[-9px] h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+                  <span className="pointer-events-none absolute left-[-9px] top-14 h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+                  <span className="pointer-events-none absolute right-8 top-[-9px] h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
 
-              <div className={`absolute inset-x-6 bottom-6 flex ${project.align}`}>
-                <div className="max-w-[28rem]">
-                  <div className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm text-black shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
-                    <span>View</span>
-                    <span className="text-black/35">—</span>
-                    <span className="font-display italic">{project.title}</span>
+                  <div className={`absolute inset-x-6 bottom-6 flex ${project.align}`}>
+                    <div className="max-w-[28rem]">
+                      <div className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm text-black shadow-[0_12px_40px_rgba(0,0,0,0.25)]">
+                        <span>View</span>
+                        <span className="text-black/35">—</span>
+                        <span className="font-display italic">
+                          {project.title}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
+                </>
+              )}
             </motion.a>
           ))}
         </div>
