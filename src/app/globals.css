@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --burnt-orange: #E85D04;
-  --mustard-yellow: #F4D03F;
-  --avocado-green: #6B8E23;
-  --hot-pink: #FF1493;
-  --teal: #008080;
-  --cream: #fefae0;
+  --bg: 0 0% 4%;
+  --surface: 0 0% 8%;
+  --text: 0 0% 96%;
+  --muted: 0 0% 53%;
+  --stroke: 0 0% 12%;
+  --accent: 0 0% 96%;
 }
 
 * {
@@ -15,30 +15,100 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
 body {
-  color: #3d405b;
-  background: var(--cream);
-  font-family: var(--font-righteous), 'Righteous', cursive;
+  background: hsl(var(--bg));
+  color: hsl(var(--text));
+  font-family: var(--font-inter), "Inter", sans-serif;
   min-height: 100vh;
 }
 
-.font-groovy {
-  font-family: var(--font-shrikhand), 'Shrikhand', cursive;
-}
-
-.font-retro {
-  font-family: var(--font-abril), 'Abril Fatface', serif;
-}
-
-.font-funky {
-  font-family: var(--font-righteous), 'Righteous', cursive;
-}
-
 ::selection {
-  background: var(--hot-pink);
+  background: #4e85bf;
   color: white;
+}
+
+/* Utility: accent gradient */
+.accent-gradient {
+  background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+}
+
+/* Custom Animations */
+@keyframes scroll-down {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(200%);
+    opacity: 0;
+  }
+}
+
+@keyframes role-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll-down {
+  animation: scroll-down 1.5s ease-in-out infinite;
+}
+
+.animate-role-fade-in {
+  animation: role-fade-in 0.4s ease-out;
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 6s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Halftone overlay for project cards */
+.halftone-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, hsl(var(--bg)) 1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.group:hover .halftone-overlay::after {
+  opacity: 0.2;
 }
 
 /* Hide scrollbar */
