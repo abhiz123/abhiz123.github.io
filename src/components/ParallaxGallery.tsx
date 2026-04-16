@@ -99,13 +99,16 @@ export default function ParallaxGallery() {
     <section
       id="explorations"
       ref={sectionRef}
-      className="relative bg-bg min-h-[300vh]"
+      className="relative isolate min-h-[300vh]"
     >
       {/* Pinned center content */}
       <div
         ref={pinRef}
-        className="h-screen flex items-center justify-center"
+        className="relative z-20 h-screen flex items-center justify-center"
       >
+        <div className="absolute inset-0 -z-10 bg-bg" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-bg via-bg/95 to-transparent" />
+
         <div className="text-center z-10 relative">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="w-8 h-px bg-stroke" />
@@ -133,8 +136,8 @@ export default function ParallaxGallery() {
         </div>
       </div>
 
-      {/* Parallax image columns — positioned absolutely over the section */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {/* Parallax image columns — positioned against the full scroll section to preserve motion depth */}
+      <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
         <div className="relative max-w-[1400px] mx-auto h-full">
           {/* Left column */}
           <div

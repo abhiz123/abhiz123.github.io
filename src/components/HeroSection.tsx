@@ -62,36 +62,35 @@ export default function HeroSection() {
       />
 
       {/* Hero content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <div className="relative z-10 text-center px-6 w-full max-w-[1400px] mx-auto">
         {/* Eyebrow */}
-        <p className="blur-in text-xs text-muted uppercase tracking-[0.3em] mb-8">
+        <p className="blur-in text-xs text-muted uppercase tracking-[0.35em] mb-8">
           Collection &apos;26
         </p>
 
         {/* Name */}
         <h1
           ref={nameRef}
-          className="name-reveal text-6xl md:text-8xl lg:text-9xl font-display italic leading-[0.9] tracking-tight text-text-primary mb-6"
+          className="name-reveal text-[4.5rem] sm:text-[5.75rem] md:text-[7rem] lg:text-[8.5rem] xl:text-[10rem] font-display italic leading-[0.88] tracking-[-0.05em] text-text-primary mb-6"
         >
-          Abhiram
-          <br />
-          Nair
+          <span className="hidden md:inline whitespace-nowrap">Abhiram Nair</span>
+          <span className="md:hidden">Abhiram Nair</span>
         </h1>
 
         {/* Role line */}
-        <p className="blur-in text-base md:text-lg text-muted mb-4">
+        <p className="blur-in text-lg md:text-[2rem] text-text-primary/90 mb-5">
           A{" "}
           <span
             key={roleIndex}
             className="font-display italic text-text-primary animate-role-fade-in inline-block"
           >
             {ROLES[roleIndex]}
-          </span>{" "}
-          based in India.
+          </span>
+          .
         </p>
 
         {/* Description */}
-        <p className="blur-in text-sm md:text-base text-muted max-w-md mx-auto mb-12">
+        <p className="blur-in text-sm md:text-[1.05rem] leading-relaxed text-muted max-w-2xl mx-auto mb-12">
           Designing seamless digital interactions by focusing on the unique
           nuances which bring systems to life.
         </p>
