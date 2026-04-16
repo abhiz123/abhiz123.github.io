@@ -25,7 +25,16 @@ type ImageProject = {
   type: "image";
 };
 
-const PROJECTS: Array<MatchaProject | ImageProject> = [
+type TodoistProject = {
+  title: string;
+  category: string;
+  href: string;
+  colSpan: string;
+  aspect: string;
+  type: "todoist";
+};
+
+const PROJECTS: Array<MatchaProject | ImageProject | TodoistProject> = [
  
   {
     title: "Matcha Resume",
@@ -37,17 +46,12 @@ const PROJECTS: Array<MatchaProject | ImageProject> = [
     type: "matcha",
   },
   {
-    title: "Signal Atlas",
-    category: "Frontend System",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&q=80",
-    href: "#contact",
+    title: "Todoist MCP Server",
+    category: "MCP / Automation",
+    href: "https://github.com/abhiz123/todoist-mcp-server",
     colSpan: "md:col-span-5",
     aspect: "aspect-[4/5]",
-    align: "items-end",
-    glow:
-      "from-[#0d1220]/80 via-[#1a2952]/35 to-transparent",
-    type: "image",
+    type: "todoist",
   },
   {
     title: "Quiet Horizons",
@@ -107,6 +111,133 @@ function MatchaProjectVisual({ video }: { video: string }) {
         </span>
       </div>
 
+    </div>
+  );
+}
+
+function TodoistProjectVisual() {
+  const tasks = [
+    { label: "Review PRs", priority: "P1", done: false },
+    { label: "Plan sprint tasks", priority: "P2", done: false },
+    { label: "Ship MCP update", priority: "Done", done: true },
+  ];
+
+  const commands = [
+    "create_task",
+    "get_tasks",
+    "update_task",
+    "complete_task",
+  ];
+
+  return (
+    <div className="absolute inset-0 overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(255,86,86,0.12),transparent_22%),linear-gradient(180deg,#0d0f12_0%,#11151c_48%,#0d1015_100%)]">
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),transparent_30%,transparent_70%,rgba(109,179,255,0.08))]" />
+      <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:20px_20px]" />
+
+      <span className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/35 px-3 py-2 text-[0.68rem] uppercase tracking-[0.22em] text-white/72 backdrop-blur-sm">
+        <span className="h-1.5 w-1.5 rotate-45 bg-[#ff6b6b]" />
+        MCP / Automation
+      </span>
+
+      <span className="pointer-events-none absolute left-[-9px] top-14 h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+      <span className="pointer-events-none absolute right-8 top-[-9px] h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
+
+      <div className="relative flex h-full flex-col justify-between p-6">
+        <div className="mt-14 space-y-4">
+          <motion.div
+            className="max-w-[78%] rounded-[1.35rem] border border-white/8 bg-white/[0.05] px-4 py-3 backdrop-blur-sm"
+            initial={{ opacity: 0, x: -18 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.55 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-[0.65rem] uppercase tracking-[0.24em] text-white/40">
+              Natural Language
+            </div>
+            <div className="mt-2 text-sm leading-relaxed text-white/78">
+              “Plan my week and add urgent tasks to Todoist.”
+            </div>
+          </motion.div>
+
+          <div className="relative flex items-center justify-center py-2">
+            <motion.div
+              className="absolute h-px w-[72%] bg-gradient-to-r from-transparent via-[#7eb6ff] to-transparent"
+              animate={{ opacity: [0.35, 1, 0.35], scaleX: [0.94, 1.04, 0.94] }}
+              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+            />
+
+            <div className="relative rounded-full border border-[#7eb6ff]/18 bg-[#111923]/85 px-4 py-2 text-[0.68rem] uppercase tracking-[0.26em] text-[#b7d7ff] backdrop-blur-sm">
+              Todoist MCP Server
+            </div>
+          </div>
+
+          <div className="grid gap-3">
+            {tasks.map((task, index) => (
+              <motion.div
+                key={task.label}
+                className="flex items-center justify-between rounded-[1.15rem] border border-white/8 bg-black/28 px-4 py-3"
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.38, delay: 0.08 * index }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-3">
+                  <span
+                    className={`inline-flex h-5 w-5 items-center justify-center rounded-full border text-[0.68rem] ${
+                      task.done
+                        ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-300"
+                        : "border-white/12 bg-white/[0.04] text-white/45"
+                    }`}
+                  >
+                    {task.done ? "✓" : ""}
+                  </span>
+                  <span className="text-sm text-white/80">{task.label}</span>
+                </div>
+
+                <span
+                  className={`rounded-full px-2.5 py-1 text-[0.62rem] uppercase tracking-[0.2em] ${
+                    task.priority === "P1"
+                      ? "bg-[#ff6b6b]/14 text-[#ff9d9d]"
+                      : task.priority === "P2"
+                        ? "bg-[#ffd166]/14 text-[#ffd98b]"
+                        : "bg-emerald-400/14 text-emerald-300"
+                  }`}
+                >
+                  {task.priority}
+                </span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {commands.map((command, index) => (
+            <motion.span
+              key={command}
+              className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[0.62rem] uppercase tracking-[0.2em] text-white/55"
+              animate={{ y: [0, -4, 0], opacity: [0.6, 1, 0.6] }}
+              transition={{
+                duration: 2.6,
+                delay: index * 0.2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              {command}
+            </motion.span>
+          ))}
+        </div>
+
+        <div className="mt-5">
+          <div className="text-[1.8rem] leading-none tracking-[-0.03em] text-white">
+            Todoist MCP Server
+          </div>
+          <div className="mt-2 text-sm leading-relaxed text-white/55">
+            Natural-language task management through MCP, bridging chat
+            commands directly into Todoist workflows.
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -177,6 +308,8 @@ export default function SelectedWorks() {
             >
               {project.type === "matcha" ? (
                 <MatchaProjectVisual video={project.video} />
+              ) : project.type === "todoist" ? (
+                <TodoistProjectVisual />
               ) : (
                 <>
                   <Image
