@@ -7,7 +7,16 @@ import { useLoadingState } from "./LoadingWrapper";
 
 const HLS_SRC =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
-const ROLES = ["Developer", "Writer", "Dancer", "Explorer"];
+const ROLES = [
+  "Developer",
+  "Writer",
+  "Dancer",
+  "Explorer",
+  "Builder",
+  "Designer",
+  "Storyteller",
+  "Systems Thinker",
+];
 
 export default function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);

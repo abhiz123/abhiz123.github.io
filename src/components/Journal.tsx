@@ -59,7 +59,7 @@ export default function Journal({ posts }: JournalProps) {
               rel="noopener noreferrer"
               className="hidden md:inline-flex items-center gap-3 text-sm text-text-primary/90 hover:text-text-primary transition-colors"
             >
-              View all journal
+              View all thoughts
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10">
                 →
               </span>
