@@ -56,7 +56,7 @@ export default function HeroSection() {
           lastName="Nair"
           imageUrl="/images/abhiram-profile.png"
           subtitle="Software • Design • AI • Writing"
-          description="Designing seamless digital interactions by focusing on the unique nuances which bring systems to life."
+          description="I design and build cinematic digital experiences that make complex systems feel intuitive, human, and alive."
         />
       </div>
 

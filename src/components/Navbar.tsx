@@ -51,23 +51,6 @@ export default function Navbar() {
           scrolled ? "shadow-md shadow-black/10" : ""
         }`}
       >
-        {/* Logo */}
-        <a
-          href="#home"
-          onClick={(e) => handleClick(e, "#home")}
-          className="group relative w-9 h-9 rounded-full flex items-center justify-center shrink-0"
-        >
-          <span className="absolute inset-0 rounded-full accent-gradient opacity-80 group-hover:opacity-100 transition-opacity" />
-          <span className="relative w-[31px] h-[31px] rounded-full bg-bg flex items-center justify-center">
-            <span className="font-display italic text-[13px] text-text-primary">
-              AN
-            </span>
-          </span>
-        </a>
-
-        {/* Divider */}
-        <span className="hidden sm:block w-px h-5 bg-stroke mx-1" />
-
         {/* Nav links */}
         {NAV_LINKS.map((link) => {
           const isActive =

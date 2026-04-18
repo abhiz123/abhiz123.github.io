@@ -1,6 +1,5 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -66,12 +65,16 @@ export default function TeamMemberCard({
             isPositionRight && 'order-2'
           )}
         >
-          <div className='pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent' />
+          <div className='pointer-events-none absolute -inset-10 bg-[radial-gradient(circle_at_55%_40%,rgba(94,134,180,0.22),transparent_68%)] blur-3xl' />
           <img
             src={imageUrl}
             alt={fullName}
             className='h-full w-full object-cover duration-500 ease-[0.22,1,0.36,1] hover:scale-105'
           />
+          <div className='pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/38 via-transparent to-black/8' />
+          <div className='pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-r from-transparent via-black/50 to-[hsl(var(--bg))]' />
+          <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-b from-transparent via-black/35 to-[hsl(var(--bg))]' />
+          <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-[hsl(var(--bg))]/55 to-transparent' />
         </motion.div>
 
         {/* Info column — uses grid row to match image height, content centered via flex */}
@@ -80,49 +83,32 @@ export default function TeamMemberCard({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            'relative z-[2] flex h-[500px] flex-col justify-center gap-10 pl-8',
-            isPositionRight ? 'order-1 pr-8 pl-0 items-end' : '-ml-8'
+            'relative z-[2] flex h-[500px] flex-col justify-center gap-8 px-8 md:px-12',
+            isPositionRight ? 'order-1 items-end pr-10 pl-8' : 'items-center'
           )}
         >
           {/* Name + subtitle */}
-          <div className={cn(isPositionRight && 'text-right')}>
-            <p className='text-5xl leading-[1.1] font-extralight tracking-tight text-text-primary'>
-              {firstName}
-              <br />
-              <span className='font-normal'>{lastName}</span>
-            </p>
-            {subtitle && (
-              <p className='mt-4 text-xs font-medium tracking-[0.3em] text-muted uppercase'>
-                {subtitle}
+          <div className={cn('flex w-full', isPositionRight ? 'justify-end' : 'justify-center')}>
+            <div className={cn('inline-flex max-w-full flex-col', isPositionRight ? 'items-end text-right' : 'items-start text-left')}>
+              <p className='whitespace-nowrap text-[clamp(3.5rem,6.8vw,5rem)] leading-none font-extralight tracking-tight text-text-primary'>
+                <span className='font-normal'>{fullName}</span>
               </p>
-            )}
-          </div>
-
-          {/* Arrow + bio */}
-          <div className={cn('flex gap-6 items-center', isPositionRight && 'flex-row-reverse')}>
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className='group flex h-16 w-16 shrink-0 cursor-pointer items-center justify-center rounded-full border border-white/20 transition-colors duration-300 hover:border-white/60 hover:bg-white/10'
-            >
-              <ArrowRight
-                size={20}
-                className={cn(
-                  'text-muted transition-all duration-300 group-hover:-rotate-45 group-hover:text-text-primary',
-                  isPositionRight && 'rotate-180 group-hover:rotate-[225deg]'
-                )}
-              />
-            </motion.div>
-
-            <p
-              className={cn(
-                'max-w-[260px] text-sm leading-[1.8] text-muted',
-                isPositionRight && 'text-right'
+              {subtitle && (
+                <p className='mt-4 self-center text-center text-xs font-medium tracking-[0.3em] text-muted uppercase'>
+                  {subtitle}
+                </p>
               )}
-            >
-              {description}
-            </p>
+            </div>
           </div>
+
+          <p
+            className={cn(
+              'w-full max-w-[320px] text-sm leading-[1.8] text-muted',
+              isPositionRight ? 'text-right' : 'text-center'
+            )}
+          >
+            {description}
+          </p>
         </motion.div>
       </div>
     </motion.div>
