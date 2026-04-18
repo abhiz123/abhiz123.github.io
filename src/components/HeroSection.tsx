@@ -22,6 +22,9 @@ export default function HeroSection() {
   const [roleIndex, setRoleIndex] = useState(0);
   const isLoading = useLoadingState();
   const currentRole = ROLES[roleIndex];
+  const roleLabel = /^[aeiou]/i.test(currentRole)
+    ? `An ${currentRole}`
+    : `A ${currentRole}`;
 
   // Cycle roles
   useEffect(() => {
@@ -51,7 +54,7 @@ export default function HeroSection() {
       >
         <TeamMemberCard
           position="left"
-          jobPosition={currentRole}
+          jobPosition={roleLabel}
           firstName="Abhiram"
           lastName="Nair"
           imageUrl="/images/abhiram-profile.png"

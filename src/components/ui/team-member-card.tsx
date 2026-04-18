@@ -39,10 +39,11 @@ export default function TeamMemberCard({
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
+        className={cn('flex w-[360px] max-w-full justify-center', isPositionRight && 'ml-auto')}
       >
         <p
           className={cn(
-            'mb-4 text-xs font-medium tracking-[0.3em] text-muted uppercase',
+            'mb-4 text-base md:text-[1.05rem] font-medium tracking-[0.3em] text-muted uppercase',
             isPositionRight && 'text-right'
           )}
         >
