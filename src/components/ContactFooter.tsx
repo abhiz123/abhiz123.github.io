@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import VideoBackground from "./VideoBackground";
-import { Github, Twitter, Linkedin, BookOpen, PenTool } from "lucide-react";
+import { Github, Twitter, Linkedin, BookOpen, PenTool, Copy, Check } from "lucide-react";
 
 const HLS_SRC =
   "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
@@ -25,9 +25,11 @@ const SOCIALS = [
 ];
 
 const MARQUEE_TEXT = "BUILDING THE FUTURE \u2022 ";
+const EMAIL = "cuttyflamgg@gmail.com";
 
 export default function ContactFooter() {
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     if (!marqueeRef.current) return;
@@ -43,6 +45,16 @@ export default function ContactFooter() {
 
     return () => ctx.revert();
   }, []);
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(EMAIL);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <section id="contact" className="relative bg-bg pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden">
@@ -77,14 +89,16 @@ export default function ContactFooter() {
           <p className="text-xs text-muted uppercase tracking-[0.3em] mb-6">
             Get in touch
           </p>
-          <a
-            href="mailto:cuttyflamgg@gmail.com"
-            className="group relative inline-flex items-center gap-2 rounded-full text-lg md:text-xl px-8 py-4 text-text-primary border border-stroke hover:border-transparent transition-all"
+          <button
+            type="button"
+            onClick={handleCopyEmail}
+            className="group relative inline-flex items-center gap-3 rounded-full text-lg md:text-xl px-8 py-4 text-text-primary border border-stroke hover:border-transparent transition-all"
           >
             <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
-            Contact now
-            <span className="text-sm">↗</span>
-          </a>
+            {copied ? "Email copied" : "Copy email"}
+            {copied ? <Check size={18} className="text-green-300" /> : <Copy size={18} />}
+          </button>
+
         </div>
 
         {/* Footer bar */}

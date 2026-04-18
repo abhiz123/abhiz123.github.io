@@ -99,12 +99,12 @@ export default function ParallaxGallery({ posts = [] }: { posts?: Post[] }) {
     >
       <div
         ref={pinRef}
-        className="relative z-20 flex h-screen items-center justify-center"
+        className="pointer-events-none relative z-20 flex h-screen items-center justify-center"
       >
         <div className="absolute inset-0 -z-10 bg-bg" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-bg via-bg/95 to-transparent" />
 
-        <div className="relative z-10 text-center">
+        <div className="pointer-events-auto relative z-10 text-center">
           <div className="mb-4 flex items-center justify-center gap-3">
             <span className="w-8 h-px bg-stroke" />
             <span className="text-xs uppercase tracking-[0.3em] text-muted">

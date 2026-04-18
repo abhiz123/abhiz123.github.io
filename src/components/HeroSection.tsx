@@ -23,6 +23,8 @@ export default function HeroSection() {
   const nameRef = useRef<HTMLHeadingElement>(null);
   const [roleIndex, setRoleIndex] = useState(0);
   const isLoading = useLoadingState();
+  const currentRole = ROLES[roleIndex];
+  const article = /^[AEIOU]/i.test(currentRole) ? "An" : "A";
 
   // Cycle roles
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function HeroSection() {
       >
         {/* Eyebrow */}
         <p className="blur-in text-xs text-muted uppercase tracking-[0.35em] mb-8">
-          Collection &apos;26
+          Software • Design • AI • Writing
         </p>
 
         {/* Name */}
@@ -94,12 +96,12 @@ export default function HeroSection() {
 
         {/* Role line */}
         <p className="blur-in text-lg md:text-[2rem] text-text-primary/90 mb-5">
-          A{" "}
+          {article}{" "}
           <span
             key={roleIndex}
             className="font-display italic text-text-primary animate-role-fade-in inline-block"
           >
-            {ROLES[roleIndex]}
+            {currentRole}
           </span>
           .
         </p>
