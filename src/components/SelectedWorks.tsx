@@ -201,23 +201,23 @@ function MatchaProjectVisual({ project }: { project: MatchaProject }) {
 }
 
 function TodoistProjectVisual({ project }: { project: TodoistProject }) {
-  const tasks = [
-    { label: "Review PRs", priority: "P1", done: false },
-    { label: "Plan sprint tasks", priority: "P2", done: false },
-    { label: "Ship MCP update", priority: "Done", done: true },
+  const workflow = [
+    "Interpret intent",
+    "Prioritize actions",
+    "Sync to Todoist",
   ];
 
   const commands = [
     "create_task",
     "get_tasks",
-    "update_task",
+    "list_projects",
     "complete_task",
   ];
 
   return (
-    <div className="absolute inset-0 overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_top,rgba(255,86,86,0.12),transparent_22%),linear-gradient(180deg,#0d0f12_0%,#11151c_48%,#0d1015_100%)]">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),transparent_30%,transparent_70%,rgba(109,179,255,0.08))]" />
-      <div className="pointer-events-none absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:20px_20px]" />
+    <div className="absolute inset-0 overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_12%_8%,rgba(255,107,107,0.16),transparent_24%),radial-gradient(circle_at_85%_88%,rgba(136,184,255,0.10),transparent_28%),linear-gradient(180deg,#0a0d12_0%,#0c1119_52%,#0a0d12_100%)]">
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.04),transparent_32%,transparent_68%,rgba(255,255,255,0.03))]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.14] [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:26px_26px]" />
 
       <ProjectBadge label="MCP / Automation" tone="red" />
 
@@ -225,65 +225,41 @@ function TodoistProjectVisual({ project }: { project: TodoistProject }) {
       <span className="pointer-events-none absolute right-8 top-[-9px] h-4 w-4 rotate-45 border border-white/18 bg-[#0a0d11]" />
 
       <div className="relative flex h-full flex-col justify-between p-6">
-        <div className="mt-14 space-y-4">
+        <div className="mt-14 space-y-5">
           <motion.div
-            className="max-w-[78%] rounded-[1.35rem] border border-white/8 bg-white/[0.035] px-4 py-3 backdrop-blur-[6px]"
+            className="max-w-[82%] rounded-[1.35rem] border border-white/10 bg-white/[0.04] px-4 py-3 backdrop-blur-[8px]"
             initial={{ opacity: 0, x: -18 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55 }}
             viewport={{ once: true }}
           >
             <div className="text-[0.65rem] uppercase tracking-[0.24em] text-white/40">
-              Natural Language
+              Natural language
             </div>
             <div className="mt-2 text-sm leading-relaxed text-white/78">
               “Plan my week and add urgent tasks to Todoist.”
             </div>
           </motion.div>
 
-          <div className="relative flex items-center justify-center py-2">
-            <motion.div
-              className="absolute h-px w-[72%] bg-gradient-to-r from-transparent via-[#7eb6ff] to-transparent"
-              animate={{ opacity: [0.35, 1, 0.35], scaleX: [0.94, 1.04, 0.94] }}
-              transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-            />
-
-            <div className="relative h-px w-[52%] bg-gradient-to-r from-transparent via-[#7eb6ff]/70 to-transparent" />
-          </div>
-
-          <div className="grid gap-3">
-            {tasks.map((task, index) => (
+          <div className="grid gap-2.5">
+            {workflow.map((step, index) => (
               <motion.div
-                key={task.label}
-                className="flex items-center justify-between rounded-[1.15rem] border border-white/8 bg-black/16 px-4 py-3"
+                key={step}
+                className="flex items-center justify-between rounded-[1.05rem] border border-white/8 bg-black/18 px-4 py-3"
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.38, delay: 0.08 * index }}
                 viewport={{ once: true }}
               >
                 <div className="flex items-center gap-3">
-                  <span
-                    className={`inline-flex h-5 w-5 items-center justify-center rounded-full border text-[0.68rem] ${
-                      task.done
-                        ? "border-emerald-400/40 bg-emerald-400/15 text-emerald-300"
-                        : "border-white/12 bg-white/[0.04] text-white/45"
-                    }`}
-                  >
-                    {task.done ? "✓" : ""}
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/12 bg-white/[0.04] text-[0.68rem] text-white/48">
+                    0{index + 1}
                   </span>
-                  <span className="text-sm text-white/80">{task.label}</span>
+                  <span className="text-sm text-white/78">{step}</span>
                 </div>
 
-                <span
-                  className={`rounded-full px-2.5 py-1 text-[0.62rem] uppercase tracking-[0.2em] ${
-                    task.priority === "P1"
-                      ? "bg-[#ff6b6b]/14 text-[#ff9d9d]"
-                      : task.priority === "P2"
-                        ? "bg-[#ffd166]/14 text-[#ffd98b]"
-                        : "bg-emerald-400/14 text-emerald-300"
-                  }`}
-                >
-                  {task.priority}
+                <span className="text-[0.62rem] uppercase tracking-[0.22em] text-white/32">
+                  {commands[index]}
                 </span>
               </motion.div>
             ))}
@@ -294,7 +270,7 @@ function TodoistProjectVisual({ project }: { project: TodoistProject }) {
           {commands.map((command, index) => (
             <motion.span
               key={command}
-              className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[0.62rem] uppercase tracking-[0.2em] text-white/55"
+              className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-[0.62rem] uppercase tracking-[0.2em] text-white/52"
               animate={{ y: [0, -4, 0], opacity: [0.6, 1, 0.6] }}
               transition={{
                 duration: 2.6,
@@ -308,7 +284,7 @@ function TodoistProjectVisual({ project }: { project: TodoistProject }) {
           ))}
         </div>
 
-        <div className="mt-5 rounded-[1.4rem] border border-white/8 bg-black/14 p-4 backdrop-blur-[6px]">
+        <div className="mt-5 rounded-[1.4rem] border border-white/8 bg-black/16 p-4 backdrop-blur-[8px]">
           <div className="text-[1.35rem] leading-none tracking-[-0.03em] text-white">
             {project.title}
           </div>

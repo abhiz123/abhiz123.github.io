@@ -1,18 +1,45 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const TIMELINE = [
+  {
+    kind: "work" as const,
+    role: "Software Engineer",
+    org: "Google",
+    logoKey: "google",
+    accent: "#4285F4",
+    location: "London, UK",
+    start: "Feb 2026",
+    end: "Present",
+    current: true,
+    description:
+      "Shipping end-to-end product systems, AI-driven experiences, and backend infrastructure as part of Google's London engineering team.",
+  },
+  {
+    kind: "startup" as const,
+    role: "Matcha Resume",
+    org: "Independent Startup",
+    logoKey: "matcha",
+    accent: "#8BD18B",
+    location: "Global",
+    start: "Jan 2025",
+    end: "Present",
+    current: true,
+    description:
+      "Building an AI resume platform focused on ATS optimization, transparent diffing, Matcha scoring, and ML-assisted rewrites.",
+  },
   {
     kind: "work" as const,
     role: "Software Development Engineer",
     org: "Amazon",
     logoKey: "amazon",
     accent: "#FF9900",
-    location: "Seattle, WA",
+    location: "Seattle, WA, USA",
     start: "Jul 2022",
-    end: "Present",
-    current: true,
+    end: "Jan 2025",
+    current: false,
     description:
       "Re-architected an analytics pipeline processing 100M events/month and cut feature-engineering time by 40% on Amazon Connect.",
   },
@@ -45,66 +72,37 @@ const TIMELINE = [
   {
     kind: "education" as const,
     role: "B.S. Computer Science",
-    org: "University of Massachusetts Amherst",
+    org: "University of Massachusetts",
     logoKey: "umass",
     accent: "#881C1C",
-    location: "Amherst, MA",
+    location: "Massachusetts, USA",
     start: "Aug 2018",
     end: "Dec 2021",
     current: false,
     description:
-      "Bachelor's in Computer Science, GPA 3.6. Focus on systems, ML, and software engineering.",
+      "Bachelor's in Computer Science. Focus on systems, ML, and software engineering.",
   },
 ];
 
 function BrandLogo({ logoKey }: { logoKey: string }) {
   const logos: Record<string, React.ReactNode> = {
     amazon: (
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M16 26c0-6 5-11 12-11s12 4 12 10v10c0 3 .5 5 2 7"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M40 32c0 5-4 9-10 9-4 0-7-2-7-6s3-6 9-7l8-1"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M12 46c6 5 16 8 25 8s17-3 22-7"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinecap="round"
-          opacity="0.55"
-        />
-      </svg>
+      <Image
+        src="/logos/amazon-smile.png"
+        alt="Amazon logo"
+        fill
+        className="object-contain"
+        sizes="56px"
+      />
     ),
     umass: (
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M10 12h40l-8 10 8 10H10z"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <path d="M10 12v44" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-        <text
-          x="16"
-          y="28"
-          fontFamily="Instrument Serif, serif"
-          fontStyle="italic"
-          fontSize="14"
-          fill="currentColor"
-        >
-          UM
-        </text>
-      </svg>
+      <Image
+        src="/logos/umass-collegiate-m.svg"
+        alt="UMass Amherst logo"
+        fill
+        className="object-contain"
+        sizes="56px"
+      />
     ),
     elton: (
       <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -128,31 +126,55 @@ function BrandLogo({ logoKey }: { logoKey: string }) {
       </svg>
     ),
     anthropic: (
-      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M22 16L12 50h7l3-10h13l3 10h7L34 16h-12z"
-          stroke="currentColor"
-          strokeWidth="3"
-          strokeLinejoin="round"
-          fill="none"
-        />
-        <path d="M24 34h8" stroke="currentColor" strokeWidth="2" opacity="0.6" />
-      </svg>
+      <Image
+        src="/logos/anthropic-official.png"
+        alt="Anthropic logo"
+        fill
+        className="object-contain"
+        sizes="56px"
+      />
+    ),
+    google: (
+      <Image
+        src="/logos/google-g.png"
+        alt="Google logo"
+        fill
+        className="object-contain"
+        sizes="56px"
+      />
+    ),
+    matcha: (
+      <Image
+        src="/logos/matcharesume-dark.png"
+        alt="Matcha Resume logo"
+        fill
+        className="object-contain"
+        sizes="56px"
+      />
     ),
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-full text-white/85">
-      <div className="w-[60%] h-[60%]">{logos[logoKey] || <div />}</div>
+    <div className="relative flex items-center justify-center w-full h-full text-white/85">
+      <div className="relative w-[60%] h-[60%]">{logos[logoKey] || <div />}</div>
     </div>
   );
 }
 
 function KindLabel({ kind }: { kind: string }) {
-  const label = kind === "work" ? "Work" : kind === "education" ? "Education" : "Project";
+  const label =
+    kind === "work"
+      ? "Work"
+      : kind === "education"
+        ? "Education"
+        : kind === "startup"
+          ? "Startup"
+          : "Project";
   const colorClasses =
     kind === "education"
       ? "text-[#89aacc]/75 border-[#89aacc]/20"
+      : kind === "startup"
+        ? "text-[#8BD18B]/85 border-[#8BD18B]/25"
       : kind === "project"
         ? "text-[#D97757]/85 border-[#D97757]/25"
         : "text-white/40 border-white/8";

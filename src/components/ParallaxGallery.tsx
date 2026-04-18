@@ -3,51 +3,49 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { Post } from "@/lib/rss";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LEFT_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80",
-    rotate: -6,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80",
-    rotate: 4,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80",
-    rotate: -3,
-  },
-];
+type GalleryPost = {
+  title: string;
+  url: string;
+  image: string;
+  rotate: number;
+};
 
-const RIGHT_IMAGES = [
-  {
-    src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80",
-    rotate: 5,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80",
-    rotate: -4,
-  },
-  {
-    src: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=600&q=80",
-    rotate: 6,
-  },
-];
+const LEFT_ROTATIONS = [-6, 4, -3];
+const RIGHT_ROTATIONS = [5, -4, 6];
 
-export default function ParallaxGallery() {
+function toGalleryPosts(posts: Post[]): { left: GalleryPost[]; right: GalleryPost[] } {
+  const filtered = posts
+    .filter((post) => post.image)
+    .slice(0, 6)
+    .map((post, index) => ({
+      title: post.title,
+      url: post.url,
+      image: post.image as string,
+      rotate: index % 2 === 0 ? LEFT_ROTATIONS[index / 2] ?? 0 : RIGHT_ROTATIONS[Math.floor(index / 2)] ?? 0,
+    }));
+
+  return {
+    left: filtered.filter((_, index) => index % 2 === 0),
+    right: filtered.filter((_, index) => index % 2 === 1),
+  };
+}
+
+export default function ParallaxGallery({ posts = [] }: { posts?: Post[] }) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
+  const gallery = toGalleryPosts(posts);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
       const ctx = gsap.context(() => {
-        // Pin the whole section
         ScrollTrigger.create({
           trigger: sectionRef.current,
           start: "top top",
@@ -56,7 +54,6 @@ export default function ParallaxGallery() {
           pinSpacing: false,
         });
 
-        // Left column — moves up
         gsap.fromTo(
           leftColRef.current,
           { y: "40%" },
@@ -72,7 +69,6 @@ export default function ParallaxGallery() {
           }
         );
 
-        // Right column — moves up slower (offset start)
         gsap.fromTo(
           rightColRef.current,
           { y: "20%" },
@@ -101,85 +97,106 @@ export default function ParallaxGallery() {
       ref={sectionRef}
       className="relative isolate min-h-[300vh]"
     >
-      {/* Pinned center content */}
       <div
         ref={pinRef}
-        className="relative z-20 h-screen flex items-center justify-center"
+        className="relative z-20 flex h-screen items-center justify-center"
       >
         <div className="absolute inset-0 -z-10 bg-bg" />
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-32 bg-gradient-to-b from-bg via-bg/95 to-transparent" />
 
-        <div className="text-center z-10 relative">
-          <div className="flex items-center justify-center gap-3 mb-4">
+        <div className="relative z-10 text-center">
+          <div className="mb-4 flex items-center justify-center gap-3">
             <span className="w-8 h-px bg-stroke" />
-            <span className="text-xs text-muted uppercase tracking-[0.3em]">
+            <span className="text-xs uppercase tracking-[0.3em] text-muted">
               Explorations
             </span>
             <span className="w-8 h-px bg-stroke" />
           </div>
-          <h2 className="text-3xl md:text-5xl lg:text-7xl text-text-primary mb-4">
-            Visual{" "}
-            <span className="font-display italic">playground</span>
+          <h2 className="mb-4 text-3xl text-text-primary md:text-5xl lg:text-7xl">
+            Archive{" "}
+            <span className="font-display italic">fragments</span>
           </h2>
-          <p className="text-sm md:text-base text-muted max-w-md mx-auto mb-8">
-            A collection of experiments, side projects, and visual studies.
+          <p className="mx-auto mb-8 max-w-md text-sm text-muted md:text-base">
+            Older essays, visual notes, and Substack pieces that sit outside the
+            latest writing feed.
           </p>
           <a
-            href="https://github.com/abhiz123"
+            href="https://truemid.substack.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-2 rounded-full text-sm px-6 py-3 text-text-primary border border-stroke hover:border-transparent transition-all"
+            className="group relative inline-flex items-center gap-2 rounded-full border border-stroke px-6 py-3 text-sm text-text-primary transition-all hover:border-transparent"
           >
-            <span className="absolute inset-[-2px] rounded-full accent-gradient opacity-0 group-hover:opacity-100 transition-opacity -z-10" />
-            Follow on GitHub
+            <span className="absolute inset-[-2px] -z-10 rounded-full accent-gradient opacity-0 transition-opacity group-hover:opacity-100" />
+            Browse the archive
           </a>
         </div>
       </div>
 
-      {/* Parallax image columns — positioned against the full scroll section to preserve motion depth */}
-      <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
-        <div className="relative max-w-[1400px] mx-auto h-full">
-          {/* Left column */}
+      <div className="absolute inset-0 z-10 overflow-hidden">
+        <div className="relative mx-auto h-full max-w-[1400px]">
           <div
             ref={leftColRef}
-            className="absolute left-4 md:left-8 lg:left-16 top-0 flex flex-col gap-8 md:gap-12 w-[200px] md:w-[300px] lg:w-[380px]"
+            className="absolute left-4 top-0 flex w-[200px] flex-col gap-8 md:left-8 md:w-[300px] md:gap-12 lg:left-16 lg:w-[380px]"
           >
-            {LEFT_IMAGES.map((img, i) => (
-              <div
-                key={i}
-                className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/40"
-                style={{ transform: `rotate(${img.rotate}deg)` }}
+            {gallery.left.map((post, index) => (
+              <a
+                key={post.url}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block overflow-hidden rounded-2xl shadow-2xl shadow-black/40 md:rounded-3xl"
+                style={{ transform: `rotate(${post.rotate}deg)` }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.src}
-                  alt={`Exploration ${i + 1}`}
-                  className="w-full aspect-[4/5] object-cover"
+                  src={post.image}
+                  alt={post.title}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
-              </div>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,14,0.04),rgba(5,8,14,0.28)_45%,rgba(5,8,14,0.82)_100%)]" />
+                <div className="absolute inset-x-4 bottom-4 rounded-[1.2rem] border border-white/10 bg-black/22 px-4 py-3 backdrop-blur-[6px]">
+                  <div className="text-[0.62rem] uppercase tracking-[0.24em] text-white/48">
+                    Substack Archive
+                  </div>
+                  <div className="mt-2 line-clamp-2 text-sm leading-snug text-white md:text-base">
+                    {post.title}
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
 
-          {/* Right column */}
           <div
             ref={rightColRef}
-            className="absolute right-4 md:right-8 lg:right-16 top-[20%] flex flex-col gap-8 md:gap-12 w-[200px] md:w-[300px] lg:w-[380px]"
+            className="absolute right-4 top-[20%] flex w-[200px] flex-col gap-8 md:right-8 md:w-[300px] md:gap-12 lg:right-16 lg:w-[380px]"
           >
-            {RIGHT_IMAGES.map((img, i) => (
-              <div
-                key={i}
-                className="rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl shadow-black/40"
-                style={{ transform: `rotate(${img.rotate}deg)` }}
+            {gallery.right.map((post) => (
+              <a
+                key={post.url}
+                href={post.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative block overflow-hidden rounded-2xl shadow-2xl shadow-black/40 md:rounded-3xl"
+                style={{ transform: `rotate(${post.rotate}deg)` }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={img.src}
-                  alt={`Exploration ${i + 4}`}
-                  className="w-full aspect-[4/5] object-cover"
+                  src={post.image}
+                  alt={post.title}
+                  className="aspect-[4/5] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   loading="lazy"
                 />
-              </div>
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,14,0.04),rgba(5,8,14,0.28)_45%,rgba(5,8,14,0.82)_100%)]" />
+                <div className="absolute inset-x-4 bottom-4 rounded-[1.2rem] border border-white/10 bg-black/22 px-4 py-3 backdrop-blur-[6px]">
+                  <div className="text-[0.62rem] uppercase tracking-[0.24em] text-white/48">
+                    Substack Archive
+                  </div>
+                  <div className="mt-2 line-clamp-2 text-sm leading-snug text-white md:text-base">
+                    {post.title}
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </div>

@@ -20,6 +20,22 @@ export default async function Home() {
   const allPosts = [...substackPosts, ...mediumPosts].sort(
     (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime()
   );
+  const journalUrls = new Set(allPosts.slice(0, 4).map((post) => post.url));
+  const imageCounts = substackPosts.reduce<Record<string, number>>((acc, post) => {
+    if (post.image) {
+      acc[post.image] = (acc[post.image] || 0) + 1;
+    }
+    return acc;
+  }, {});
+  const archivePosts = substackPosts
+    .filter(
+      (post) =>
+        !journalUrls.has(post.url) &&
+        post.image &&
+        !post.image.includes("subscribe-card") &&
+        imageCounts[post.image] === 1
+    )
+    .slice(0, 6);
 
   return (
     <LoadingWrapper>
@@ -29,7 +45,7 @@ export default async function Home() {
         <SelectedWorks />
         <Experience />
         <Journal posts={allPosts} />
-        <ParallaxGallery />
+        <ParallaxGallery posts={archivePosts} />
         <Stats />
         <ContactFooter />
       </main>
