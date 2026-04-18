@@ -1,41 +1,54 @@
-import AnimatedBackground from "@/components/AnimatedBackground";
-import Hero from "@/components/Hero";
-import UnifiedFeed from "@/components/UnifiedFeed";
-import Dock from "@/components/Dock";
-import PhotoGallery from "@/components/PhotoGallery";
-import { getGithubActivity } from "@/lib/github";
 import { getSubstackPosts, getMediumPosts } from "@/lib/rss";
-import { getDrivePhotos } from "@/lib/google-drive";
+import LoadingWrapper from "@/components/LoadingWrapper";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import SelectedWorks from "@/components/SelectedWorks";
+import Journal from "@/components/Journal";
+import ParallaxGallery from "@/components/ParallaxGallery";
+import Experience from "@/components/Experience";
+import Stats from "@/components/Stats";
+import ContactFooter from "@/components/ContactFooter";
 
-export const revalidate = 300; // Revalidate every 5 minutes
+export const revalidate = 300;
 
 export default async function Home() {
-  const githubActivity = await getGithubActivity("abhiz123");
-  const substackPosts = await getSubstackPosts("https://truemid.substack.com/feed");
-  const mediumPosts = await getMediumPosts("truemid");
-  const photos = await getDrivePhotos();
+  const [substackPosts, mediumPosts] = await Promise.all([
+    getSubstackPosts("https://truemid.substack.com/feed"),
+    getMediumPosts("truemid"),
+  ]);
+
+  const allPosts = [...substackPosts, ...mediumPosts].sort(
+    (a, b) => new Date(b.rawDate).getTime() - new Date(a.rawDate).getTime()
+  );
+  const journalUrls = new Set(allPosts.slice(0, 4).map((post) => post.url));
+  const imageCounts = substackPosts.reduce<Record<string, number>>((acc, post) => {
+    if (post.image) {
+      acc[post.image] = (acc[post.image] || 0) + 1;
+    }
+    return acc;
+  }, {});
+  const archivePosts = substackPosts
+    .filter(
+      (post) =>
+        !journalUrls.has(post.url) &&
+        post.image &&
+        !post.image.includes("subscribe-card") &&
+        imageCounts[post.image] === 1
+    )
+    .slice(0, 6);
 
   return (
-    <main className="min-h-screen relative overflow-x-hidden selection:bg-blue-500/30">
-      <AnimatedBackground />
-      <div className="container mx-auto px-4 py-12 md:py-24 lg:py-32">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-center min-h-[70vh]">
-          <div className="hidden xl:flex xl:col-span-3 items-center justify-center">
-            <PhotoGallery initialImages={photos} />
-          </div>
-          <div className="xl:col-span-6 flex flex-col items-center justify-center">
-            <Hero />
-          </div>
-          <div className="xl:col-span-3 sticky top-12">
-            <UnifiedFeed
-              githubActivity={githubActivity}
-              substackPosts={substackPosts}
-              mediumPosts={mediumPosts}
-            />
-          </div>
-        </div>
-      </div>
-      <Dock />
-    </main>
+    <LoadingWrapper>
+      <Navbar />
+      <main className="relative bg-bg text-text-primary overflow-x-hidden">
+        <HeroSection />
+        <SelectedWorks />
+        <Experience />
+        <Journal posts={allPosts} />
+        <ParallaxGallery posts={archivePosts} />
+        <Stats />
+        <ContactFooter />
+      </main>
+    </LoadingWrapper>
   );
 }

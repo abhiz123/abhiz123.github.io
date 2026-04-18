@@ -20,17 +20,49 @@ const parser = new Parser({
     },
 });
 
+async function getPageOgImage(url?: string): Promise<string | undefined> {
+    if (!url) return undefined;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "user-agent":
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+            },
+            next: { revalidate: 300 },
+        });
+
+        if (!response.ok) return undefined;
+
+        const html = await response.text();
+        const ogImage =
+            html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i)?.[1] ||
+            html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i)?.[1] ||
+            html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["']/i)?.[1];
+
+        if (!ogImage || ogImage.includes("subscribe-card")) return undefined;
+        return ogImage.replace(/&amp;/g, "&");
+    } catch (error) {
+        return undefined;
+    }
+}
+
 export async function getSubstackPosts(url: string): Promise<Post[]> {
     try {
         const feed = await parser.parseURL(url);
 
-        return feed.items.map((item: any) => {
+        const posts = await Promise.all(feed.items.map(async (item: any) => {
             // Try to find an image in various standard RSS locations
-            const image =
+            const feedImage =
                 item.enclosure?.url ||
                 item['media:content']?.url ||
                 (item.content?.match(/<img[^>]+src="([^">]+)"/)?.[1]) ||
                 undefined;
+            const pageImage =
+                !feedImage || feedImage.includes("subscribe-card")
+                    ? await getPageOgImage(item.link)
+                    : undefined;
+            const image = pageImage || feedImage;
 
             return {
                 id: item.guid || item.link || Math.random().toString(),
@@ -46,7 +78,9 @@ export async function getSubstackPosts(url: string): Promise<Post[]> {
                 url: item.link || "",
                 image,
             };
-        });
+        }));
+
+        return posts;
     } catch (error) {
         console.error("Error fetching Substack feed:", error);
         return [];
