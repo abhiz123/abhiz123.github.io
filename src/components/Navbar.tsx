@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 const NAV_LINKS = [
   { label: "Home", href: "#home" },
   { label: "Work", href: "#work" },
+  { label: "Experience", href: "#experience" },
   { label: "Journal", href: "#journal" },
 ];
 

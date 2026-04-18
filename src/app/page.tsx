@@ -5,6 +5,7 @@ import HeroSection from "@/components/HeroSection";
 import SelectedWorks from "@/components/SelectedWorks";
 import Journal from "@/components/Journal";
 import ParallaxGallery from "@/components/ParallaxGallery";
+import Experience from "@/components/Experience";
 import Stats from "@/components/Stats";
 import ContactFooter from "@/components/ContactFooter";
 
@@ -26,6 +27,7 @@ export default async function Home() {
       <main className="relative bg-bg text-text-primary overflow-x-hidden">
         <HeroSection />
         <SelectedWorks />
+        <Experience />
         <Journal posts={allPosts} />
         <ParallaxGallery />
         <Stats />
