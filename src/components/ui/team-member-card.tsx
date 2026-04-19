@@ -66,14 +66,15 @@ export default function TeamMemberCard({
             isPositionRight && 'order-2'
           )}
         >
-          <div className='pointer-events-none absolute -inset-10 bg-[radial-gradient(circle_at_55%_40%,rgba(94,134,180,0.22),transparent_68%)] blur-3xl' />
+          <div className='pointer-events-none absolute -inset-10 bg-[radial-gradient(circle_at_55%_40%,rgba(204,142,84,0.18),transparent_68%)] blur-3xl' />
           <img
             src={imageUrl}
             alt={fullName}
-            className='h-full w-full object-cover duration-500 ease-[0.22,1,0.36,1] hover:scale-105'
+            className='h-full w-full object-cover brightness-[0.94] contrast-[1.02] saturate-[0.88] sepia-[0.08] duration-500 ease-[0.22,1,0.36,1] hover:scale-105'
           />
-          <div className='pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/38 via-transparent to-black/8' />
-          <div className='pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-r from-transparent via-black/50 to-[hsl(var(--bg))]' />
+          <div className='pointer-events-none absolute inset-0 z-10 bg-[linear-gradient(180deg,rgba(0,0,0,0.12),rgba(56,32,18,0.16)_36%,rgba(0,0,0,0.4)_100%)]' />
+          <div className='pointer-events-none absolute inset-0 z-10 bg-[radial-gradient(circle_at_72%_28%,rgba(241,190,128,0.14),transparent_30%),radial-gradient(circle_at_28%_72%,rgba(198,134,74,0.1),transparent_34%)] mix-blend-screen' />
+          <div className='pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-r from-transparent via-black/38 to-[hsl(var(--bg))]' />
           <div className='pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-b from-transparent via-black/35 to-[hsl(var(--bg))]' />
           <div className='pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-[hsl(var(--bg))]/55 to-transparent' />
         </motion.div>
@@ -84,12 +85,21 @@ export default function TeamMemberCard({
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            'relative z-[2] flex h-[500px] flex-col justify-center gap-8 px-8 md:px-12',
-            isPositionRight ? 'order-1 items-end pr-10 pl-8' : 'items-center'
+            'relative z-[2] isolate flex h-[500px] flex-col justify-center gap-8 px-8 md:px-12',
+            isPositionRight ? 'order-1 items-end pr-10 pl-8' : 'items-center md:pl-16 lg:pl-24'
           )}
         >
+          <div
+            className={cn(
+              'pointer-events-none absolute inset-y-8 z-0 rounded-[2.5rem]',
+              isPositionRight
+                ? 'left-0 right-10 bg-[linear-gradient(90deg,rgba(14,9,6,0.58),rgba(14,9,6,0.22),transparent)]'
+                : 'left-10 right-0 bg-[radial-gradient(circle_at_30%_45%,rgba(24,16,10,0.56),rgba(16,11,8,0.4)_38%,rgba(11,8,6,0.1)_72%,transparent_100%)] backdrop-blur-[1.5px]'
+            )}
+          />
+
           {/* Name + subtitle */}
-          <div className={cn('flex w-full', isPositionRight ? 'justify-end' : 'justify-center')}>
+          <div className={cn('relative z-10 flex w-full', isPositionRight ? 'justify-end' : 'justify-center')}>
             <div className={cn('inline-flex max-w-full flex-col', isPositionRight ? 'items-end text-right' : 'items-start text-left')}>
               <p className='whitespace-nowrap text-[clamp(3.5rem,6.8vw,5rem)] leading-none font-extralight tracking-tight text-text-primary'>
                 <span className='font-normal'>{fullName}</span>
@@ -104,7 +114,7 @@ export default function TeamMemberCard({
 
           <p
             className={cn(
-              'w-full max-w-[320px] text-sm leading-[1.8] text-muted',
+              'relative z-10 w-full max-w-[320px] text-sm leading-[1.8] text-muted',
               isPositionRight ? 'text-right' : 'text-center'
             )}
           >

@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --bg: 0 0% 4%;
-  --surface: 0 0% 8%;
-  --text: 0 0% 96%;
-  --muted: 0 0% 53%;
-  --stroke: 0 0% 12%;
-  --accent: 0 0% 96%;
+  --bg: 28 24% 5%;
+  --surface: 28 18% 10%;
+  --text: 36 34% 95%;
+  --muted: 30 18% 72%;
+  --stroke: 24 16% 18%;
+  --accent: 34 70% 78%;
 }
 
 * {
@@ -19,20 +19,52 @@ html {
 }
 
 body {
-  background: hsl(var(--bg));
+  background:
+    radial-gradient(circle at top, rgba(232, 190, 132, 0.1), transparent 34%),
+    linear-gradient(180deg, rgba(18, 12, 8, 0.96), rgba(8, 6, 5, 1));
   color: hsl(var(--text));
   font-family: var(--font-inter), "Inter", sans-serif;
   min-height: 100vh;
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -12%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 18% 14%, rgba(240, 172, 96, 0.18), transparent 22%),
+    radial-gradient(circle at 82% 18%, rgba(255, 209, 147, 0.12), transparent 26%),
+    radial-gradient(circle at 52% 72%, rgba(184, 122, 72, 0.12), transparent 28%);
+  animation: amber-drift 24s ease-in-out infinite alternate;
+}
+
+body::after {
+  background:
+    linear-gradient(135deg, rgba(255, 188, 110, 0.05), transparent 34%, rgba(122, 77, 45, 0.08) 68%, transparent 100%),
+    radial-gradient(circle at 50% 50%, rgba(255, 214, 170, 0.06), transparent 46%);
+  filter: blur(28px);
+  animation: amber-drift 32s ease-in-out infinite alternate-reverse;
 }
 
 ::selection {
-  background: #4e85bf;
+  background: #b87a48;
   color: white;
 }
 
 /* Utility: accent gradient */
 .accent-gradient {
-  background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+  background: linear-gradient(90deg, #7a4d2d 0%, #b87a48 48%, #f0cd9d 100%);
 }
 
 /* Custom Animations */
@@ -93,6 +125,18 @@ body {
   100% {
     transform: translate3d(14px, -52px, 0) scale(1.18);
     opacity: 0;
+  }
+}
+
+@keyframes amber-drift {
+  0% {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(1.5%, 2%, 0) scale(1.04);
+  }
+  100% {
+    transform: translate3d(3%, -2%, 0) scale(1.08);
   }
 }
 

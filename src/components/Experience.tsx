@@ -293,7 +293,9 @@ export default function Experience() {
       className="relative py-[120px] md:py-[160px] bg-bg overflow-hidden"
     >
       {/* Subtle radial glow */}
-      <div className="pointer-events-none absolute top-1/2 -right-[20%] w-[60%] h-[70%] -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(137,170,204,0.08),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0f0a07] to-transparent" />
+      <div className="pointer-events-none absolute top-1/2 -right-[20%] w-[60%] h-[70%] -translate-y-1/2 bg-[radial-gradient(ellipse_at_center,rgba(206,152,96,0.1),transparent_60%)]" />
+      <div className="pointer-events-none absolute -left-[15%] top-0 h-[55%] w-[50%] bg-[radial-gradient(circle_at_center,rgba(151,98,58,0.1),transparent_62%)]" />
 
       <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16">
         {/* Section header */}

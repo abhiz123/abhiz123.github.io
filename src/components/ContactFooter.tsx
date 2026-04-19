@@ -2,11 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import VideoBackground from "./VideoBackground";
 import { Github, Twitter, Linkedin, BookOpen, PenTool, Copy, Check } from "lucide-react";
-
-const HLS_SRC =
-  "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
 
 const SOCIALS = [
   { name: "Twitter", icon: Twitter, url: "https://twitter.com/0_yes_abhi" },
@@ -57,13 +53,8 @@ export default function ContactFooter() {
   };
 
   return (
-    <section id="contact" className="relative bg-bg pt-16 md:pt-20 pb-8 md:pb-12 overflow-hidden">
-      {/* Background video (flipped) */}
-      <VideoBackground
-        src={HLS_SRC}
-        flipped
-        overlayOpacity={0.6}
-      />
+    <section id="contact" className="relative overflow-hidden bg-gradient-to-b from-[#090705] via-[#0c0806] to-[#070605] pt-16 md:pt-20 pb-8 md:pb-12">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(240,172,96,0.1),transparent_26%),radial-gradient(circle_at_80%_18%,rgba(255,209,147,0.08),transparent_24%),linear-gradient(180deg,rgba(13,9,7,0),rgba(13,9,7,0.56)_40%,rgba(7,6,5,0.94)_100%)]" />
 
       <div className="relative z-10">
         {/* Marquee */}

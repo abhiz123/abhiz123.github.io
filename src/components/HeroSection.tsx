@@ -5,8 +5,8 @@ import VideoBackground from "./VideoBackground";
 import { useLoadingState } from "./LoadingWrapper";
 import TeamMemberCard from "./ui/team-member-card";
 
-const HLS_SRC =
-  "https://stream.mux.com/Aa02T7oM1wH5Mk5EEVDYhbZ1ChcdhRsS2m1NYyx4Ua1g.m3u8";
+const HERO_VIDEO_SRC =
+  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260405_171521_25968ba2-b594-4b32-aab7-f6b69398a6fa.mp4";
 const ROLES = [
   "Developer",
   "Writer",
@@ -41,14 +41,13 @@ export default function HeroSection() {
     >
       {/* Background video */}
       <VideoBackground
-        src={HLS_SRC}
-        overlayOpacity={0.2}
-        bottomFade
+        src={HERO_VIDEO_SRC}
+        overlayOpacity={0.34}
       />
 
       {/* Hero content — TeamMemberCard inside the hero */}
       <div
-        className={`relative z-10 w-full max-w-[1200px] mx-auto px-6 transition-opacity duration-700 ${
+        className={`relative z-10 w-full max-w-[1280px] mx-auto px-6 transition-opacity duration-700 ${
           isLoading ? "opacity-0" : "opacity-100"
         }`}
       >

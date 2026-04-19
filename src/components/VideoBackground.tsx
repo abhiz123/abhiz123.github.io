@@ -23,9 +23,15 @@ export default function VideoBackground({
     const video = videoRef.current;
     if (!video) return;
 
-    let hls: any = null;
+    let hls: { destroy: () => void } | null = null;
+    const isHlsSource = src.includes(".m3u8");
 
     async function initHls() {
+      if (!isHlsSource) {
+        video.src = src;
+        return;
+      }
+
       const Hls = (await import("hls.js")).default;
 
       if (Hls.isSupported()) {
@@ -43,6 +49,8 @@ export default function VideoBackground({
       if (hls) {
         hls.destroy();
       }
+      video.removeAttribute("src");
+      video.load();
     };
   }, [src]);
 

@@ -25,7 +25,9 @@ function placeholderStyle(index: number) {
 
 export default function Journal({ posts }: JournalProps) {
   return (
-    <section id="journal" className="bg-[#060708] py-20 md:py-24">
+    <section id="journal" className="relative overflow-hidden bg-gradient-to-b from-[#090705] via-[#0d0907] to-[#070605] py-20 md:py-24">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#0f0a07] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(222,172,118,0.08),transparent_38%)]" />
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16">
         <motion.div
           className="mb-12 md:mb-16"

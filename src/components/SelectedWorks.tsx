@@ -382,14 +382,11 @@ export default function SelectedWorks() {
   return (
     <section
       id="work"
-      className="relative overflow-hidden bg-gradient-to-b from-[#050505] via-[#08111d] to-[#07111b] py-16 md:py-24"
+      className="relative -mt-6 overflow-hidden bg-transparent pt-16 pb-16 md:-mt-8 md:pt-20 md:pb-24"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#050505] via-[#050505]/90 to-transparent" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(124,164,214,0.16),transparent_45%)]" />
-
       <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 lg:px-16">
         <motion.div
-          className="mb-12 md:mb-16"
+          className="mb-12 px-5 py-8 md:mb-16 md:px-2 md:py-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }}

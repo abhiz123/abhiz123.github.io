@@ -10,7 +10,8 @@ const STATS = [
 
 export default function Stats() {
   return (
-    <section className="bg-bg py-16 md:py-24">
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#090705] via-[#0b0806] to-[#080605] py-16 md:py-24">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(206,152,96,0.08),transparent_42%)]" />
       <div className="max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
           {STATS.map((stat, i) => (
