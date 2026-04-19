@@ -2,6 +2,12 @@
 
 import { useEffect, useRef } from "react";
 
+type HlsInstance = {
+  loadSource: (src: string) => void;
+  attachMedia: (media: HTMLMediaElement) => void;
+  destroy: () => void;
+};
+
 interface VideoBackgroundProps {
   src: string;
   className?: string;
@@ -23,12 +29,15 @@ export default function VideoBackground({
     const video = videoRef.current;
     if (!video) return;
 
-    let hls: { destroy: () => void } | null = null;
+    let hls: HlsInstance | null = null;
     const isHlsSource = src.includes(".m3u8");
 
     async function initHls() {
+      const media = videoRef.current;
+      if (!media) return;
+
       if (!isHlsSource) {
-        video.src = src;
+        media.src = src;
         return;
       }
 
@@ -37,9 +46,9 @@ export default function VideoBackground({
       if (Hls.isSupported()) {
         hls = new Hls({ enableWorker: false });
         hls.loadSource(src);
-        hls.attachMedia(video!);
-      } else if (video!.canPlayType("application/vnd.apple.mpegurl")) {
-        video!.src = src;
+        hls.attachMedia(media);
+      } else if (media.canPlayType("application/vnd.apple.mpegurl")) {
+        media.src = src;
       }
     }
 
